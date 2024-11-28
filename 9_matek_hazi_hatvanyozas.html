@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika Teszt</title>
+    <!-- MathJax betöltése LaTeX szintaxissal -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interaktív házi feladat - Hatványozással kapcsolatos ismeretek gyakorlása</h2>
+    
+    <label>Név: <input type="text" id="tanuloNev" placeholder="Tanuló neve"></label><br><br>
+    
+    <form id="tesztForm">
+        <div class="question">
+            <label>1. Jelöld meg mennyi a \(3^5\) hatvány értéke!</label><br>
+            <input type="radio" name="kerdes1" value="1">\(81\)<br>
+            <input type="radio" name="kerdes1" value="2" class="helyesValasz">\(243\)<br>
+            <input type="radio" name="kerdes1" value="3">\(27\)<br>
+        </div>
+ 
+ 		  <div class="question">
+            <label>2. Jelöld meg, menyi az \((\frac{1}{2})^{-2}\) hatvány értéke!</label><br>
+            <input type="radio" name="kerdes2" value="1">\(\frac{1}{4}\)<br>
+            <input type="radio" name="kerdes2" value="2">\(2\)<br>
+            <input type="radio" name="kerdes2" value="3" class="helyesValasz">\(4\)<br>
+        </div>
+       
+        <div class="question">
+            <label>3. Jelöld meg, mivel egyezik meg a \(\frac{(a \cdot b^2)^{3}}{a^4 \cdot b^5}\) kifejezés!</label><br>
+            <input type="radio" name="kerdes3" value="1" class="helyesValasz">\(\frac{b}{a}\)<br>
+            <input type="radio" name="kerdes3" value="2">\(b\)<br>
+            <input type="radio" name="kerdes3" value="3">\(a \cdot b\)<br>
+        </div>
+       
+        <div class="question">
+            <label>4. Jelöld meg azt a kifejezést, ami helyesen adja meg a 0.0000000103 normálalakját!</label><br>
+            <input type="radio" name="kerdes4" value="1">\(10.3 \cdot 10^{-8}\)<br>
+            <input type="radio" name="kerdes4" value="2" class="helyesValasz">\(1.03 \cdot 10^{-9}\)<br>
+            <input type="radio" name="kerdes4" value="3">\(1.3 \cdot 10^{-9}\)<br>
+        </div>
+       
+       
+        <div class="question">
+            <label>5. Jelöld be azokat a kifejezéseket, amelyek ugyanazt az eredményt adják, mint: \( \frac{0.00000003}{6000000000}\) </label><br>
+            <input type="checkbox" name="kerdes5" value="2" class="helyesValasz">\( \frac{3 \cdot 10^{-8}}{6 \cdot 10^{-9}}\)<br>
+            <input type="checkbox" name="kerdes5" value="4">\( \frac{1}{2} \cdot 10^{-17}\)<br>
+            <input type="checkbox" name="kerdes5" value="5" class="helyesValasz">\( 0.5 \cdot 10\)<br>
+            <input type="checkbox" name="kerdes5" value="9" class="helyesValasz">\(5\)<br>
+        </div>
+
+ 			<p>Az első öt feladatban megjelölhető 7 lehetőségből <span id="osszesPont">0</span> lett helyes.</p>
+        
+         <button type="button" onclick="autoPontozas()">Önellenőrzés</button>
+       <!-- <button type="button" onclick="mentesHtml()">Teszt mentése HTML fájlba</button> -->
+
+         <p>A 6. és 7. kérdésre adott válaszodat az órán, a házi feladat ellenőrzésekor beszéljük meg.</p>
+
+        <div class="question">
+            <label>6. Röviden írd le, milyen előjelű a \((-345)^{28}\) hatvány értéke!</label><br>
+            <input type="text" name="kerdes6" placeholder="Írd be a választ"><br>
+        </div>
+
+        <div class="question">
+            <label>7. Általában mivel egyenlő a számok negatív egész kitevőjű hatványa?</label><br>
+            <textarea name="kerdes7" rows="4" cols="50" placeholder="Írd be a magyarázatodat..."></textarea><br>
+        </div>
+
+			<p>A kitöltött feladatsorról készítsél képernyőképet ha mobiltelefonnal dolgoztál
+			vagy asztali számítógépen kattints az alábbi ''PDF-be nyomtatás'' gombra.
+			A képernyőképet vagy a létrehozott PDF fájlt töltsed fel a KRÉTA naplóba a házi feladat beküldéséhez!</p>
+
+	</div>
+        <button onclick="nyomtat()">PDF-be nyomtatás</button>
+    </div>
+       
+    </form>
+
+<script>
+    function autoPontozas() {
+        let osszesPont = 0;
+
+        // Kérdés 1 - rádiógombos kérdés ellenőrzése
+        const kerdes1Valasz = document.querySelector('input[name="kerdes1"]:checked');
+        if (kerdes1Valasz && kerdes1Valasz.classList.contains('helyesValasz')) {
+            osszesPont += 1; // 5 pont a helyes válaszért
+        }
+
+// Kérdés 1 - rádiógombos kérdés ellenőrzése
+        const kerdes2Valasz = document.querySelector('input[name="kerdes2"]:checked');
+        if (kerdes2Valasz && kerdes2Valasz.classList.contains('helyesValasz')) {
+            osszesPont += 1; // 5 pont a helyes válaszért
+        }
+// Kérdés 1 - rádiógombos kérdés ellenőrzése
+        const kerdes3Valasz = document.querySelector('input[name="kerdes3"]:checked');
+        if (kerdes3Valasz && kerdes3Valasz.classList.contains('helyesValasz')) {
+            osszesPont += 1; // 5 pont a helyes válaszért
+        }
+// Kérdés 1 - rádiógombos kérdés ellenőrzése
+        const kerdes4Valasz = document.querySelector('input[name="kerdes4"]:checked');
+        if (kerdes4Valasz && kerdes4Valasz.classList.contains('helyesValasz')) {
+            osszesPont += 1; // 5 pont a helyes válaszért
+        }
+
+        // Kérdés 2 - több válaszos kérdés ellenőrzése
+        const kerdes5Valaszok = document.querySelectorAll('input[name="kerdes5"]:checked');
+        let kerdes5Pont = 0;
+        kerdes5Valaszok.forEach(valasz => {
+            if (valasz.classList.contains('helyesValasz')) {
+                kerdes5Pont += 1; // 2.5 pont minden helyes válaszért
+            } else {
+                kerdes5Pont -= 1; // 2.5 pont levonás minden hibás válaszért
+            }
+        });
+        kerdes5Pont = Math.max(kerdes5Pont, 0); // Pontszám ne legyen negatív
+        osszesPont += kerdes5Pont;
+
+        // Összesített pontok megjelenítése
+        document.getElementById('osszesPont').textContent = osszesPont;
+    }
+
+ 
+     function mentesHtml() {
+        const tanuloNev = document.getElementById('tanuloNev').value;
+        if (!tanuloNev) {
+            alert("Kérjük, add meg a tanuló nevét!");
+            return;
+        }
+
+        // Másolat készítése a dokumentumról
+        const docClone = document.documentElement.cloneNode(true);
+
+        // A válaszok frissítése a másolatban
+        const formValues = new FormData(document.getElementById('tesztForm'));
+
+        // Frissítjük a másolatot a válaszokkal
+        formValues.forEach((value, key) => {
+            const inputElements = docClone.querySelectorAll(`[name="${key}"]`);
+            inputElements.forEach(inputElement => {
+                if (inputElement.type === 'radio' || inputElement.type === 'checkbox') {
+                    inputElement.checked = (inputElement.value === value);
+                } else {
+                    inputElement.value = value;
+                }
+            });
+        });
+
+        // Összes pontszám frissítése a mentett fájlban
+        const osszesPontElement = docClone.getElementById('osszesPont');
+        if (osszesPontElement) {
+            osszesPontElement.textContent = document.getElementById('osszesPont').textContent;
+        }
+
+        // HTML mentése fájlként a diák neve alapján
+        const vezeteknev = tanuloNev.split(" ")[0].toLowerCase();
+        const htmlContent = "<!DOCTYPE html>\n" + docClone.outerHTML;
+        const blob = new Blob([htmlContent], { type: "text/html" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${vezeteknev}_matek_teszt.html`;
+        document.body.appendChild(link); // Link hozzáadása a dokumentumhoz
+        link.click(); // Automatikus kattintás a fájl letöltéséhez
+        document.body.removeChild(link); // Link eltávolítása a dokumentumból
+    }
+    
+    function nyomtat() {
+        window.print();
+    }
+</script>
+
+</body>
+</html>
